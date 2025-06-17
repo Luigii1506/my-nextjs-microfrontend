@@ -1,0 +1,74 @@
+{
+  "compilerOptions": {
+    // Especifica la versión de JavaScript a la que se compilará el código.
+    // 'esnext' permite usar las últimas características de JS y '@babel/preset-env' las reducirá según sea necesario.
+    "target": "esnext",
+
+    // Módulos a incluir en la compilación.
+    "lib": [
+      "dom", // Para tipos DOM (document, window, etc.)
+      "dom.iterable", // Para iterables del DOM
+      "esnext" // Para las últimas características de ECMAScript
+    ],
+
+    // Permite la importación de archivos JavaScript en módulos TypeScript.
+    "allowJs": true,
+
+    // Omite la verificación de tipos de archivos de declaración (.d.ts) en node_modules.
+    "skipLibCheck": true,
+
+    // Habilita todas las opciones estrictas de verificación de tipos.
+    // Considera establecerlo en `true` para proyectos más grandes y robustos,
+    // pero `false` es aceptable para empezar si causa muchos errores iniciales.
+    "strict": false,
+
+    // ¡CRÍTICO para Rollup! No queremos que TypeScript emita archivos JS directamente.
+    // Rollup (con @rollup/plugin-typescript) manejará la emisión.
+    // Anteriormente, `true` podía causar problemas porque indicaba a TS que *no* produjera JS.
+    "noEmit": false, // <--- CAMBIO IMPORTANTE: Asegúrate de que esté en 'false'
+
+    // Habilita la interoperabilidad con módulos CommonJS para imports/exports.
+    "esModuleInterop": true,
+
+    // Especifica el sistema de módulos de salida. 'esnext' es moderno y flexible.
+    "module": "esnext",
+
+    // Estrategia de resolución de módulos. 'bundler' es ideal para Next.js con herramientas como Webpack/Rollup.
+    "moduleResolution": "bundler",
+
+    // Permite importar archivos JSON como módulos.
+    "resolveJsonModule": true,
+
+    // Asegura que cada archivo es tratado como un módulo separado. Crucial para transpilación.
+    "isolatedModules": true,
+
+    // ¡CRÍTICO para JSX con Babel!
+    // 'preserve' le dice a TypeScript que mantenga la sintaxis JSX tal cual.
+    // Babel (@babel/preset-react) será el encargado de transformar el JSX a _jsx() o React.createElement().
+    "jsx": "preserve", // <--- CAMBIO IMPORTANTE: Asegúrate de que esté en 'preserve'
+
+    // Habilita la compilación incremental para builds más rápidos.
+    "incremental": true,
+
+    // Plugins específicos de TypeScript (para Next.js, por ejemplo).
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+
+    // Permite usar alias de ruta como '@/*' para `src/*`.
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  // Archivos a incluir en la compilación.
+  "include": [
+    "next-env.d.ts", // Archivo de declaración de entorno de Next.js
+    "**/*.ts", // Todos los archivos .ts
+    "**/*.tsx", // Todos los archivos .tsx (¡importante para tus componentes!)
+    ".next/types/**/*.ts" // Tipos generados por Next.js
+  ],
+  // Archivos a excluir de la compilación.
+  "exclude": ["node_modules"]
+}
